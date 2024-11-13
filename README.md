@@ -1,1 +1,1 @@
-# 15618-project
+# Concurrent Extendible Hash Table
