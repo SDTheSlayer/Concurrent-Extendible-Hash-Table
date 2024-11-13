@@ -1,77 +1,79 @@
-## Authors: Shivang Dalal (shivangd), Ashwin Rao (arao2) 
 
-URL: [https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/](https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/)
+# Concurrent Extendible Hash Table
 
-# Summary
-We aim to develop a concurrent extendible hash table optimized for high-performance parallel operations. We will target most of our effort based off of the needs of hash tables in high performance database systems, which partition the hash table tasks into a build and lookup phase. Our implementation will explore different locking mechanisms on a CPU OpenMP environment and evaluate lock-free implementations from literature. Additionally, we will investigate the performance benefits of using SIMD in the context of parallel key lookups. 
+## Authors: Shivang Dalal (shivangd), Ashwin Rao (arao2)  
 
-<!-- TITLE: Please provide the title of your project, followed by the names of all team members.
-Teams must be two students. There are no exceptions to this rule.
-URL: Please provide the URL for your project web page.
-SUMMARY: Summarize your project in no more than 2-3 sentences. Describe what you plan
-to do and what parallel systems you will be working with. Example one-liners include (you
-should add a bit more detail):
-• We are going to implement an optimized Smoothed Particle Hydrodynamics fluid
-solver on the NVIDIA GPUs in the lab.
-• We are going port the Go runtime to Blacklight.
-2
-• We are going to create optimized implementations of sparse-matrix multiplication on
-both GPU and multi-core CPU platforms, and perform a detailed analysis of both
-systems’ performance characteristics.
-• We are going to back-engineer the unpublished machine specifications of the GPU in
-the tablet my partner just purchased.
-• We are going to implement two possible algorithms for a real-time computer vision
-application on a mobile device and measure their energy consumption in the lab.
-BACKGROUND: If your project involves accelerating a compute-intensive application, describe the application or piece of the application you are going to implement in more
-detail. This description need only be a few paragraphs. It might be helpful to include a
-block diagram or pseudocode of the basic idea. An important detail is what aspects of the
-problem might benefit from parallelism and why?
-THE CHALLENGE: Describe why the problem is challenging. What aspects of the problem
-might make it difficult to parallelize? In other words, what to you hope to learn by doing
-the project?
-• Describe the workload: what are the dependencies, what are its memory access characteristics? (is there locality? is there a high communication to computation ratio?),
-is there divergent execution?
-• Describe constraints: What are the properties of the system that make mapping the
-workload to it challenging?
-RESOURCES: Describe the resources (type of computers, starter code, etc.) you will use.
-What code base will you start from? Are you starting from scratch or using an existing
-piece of code? Is there a book or paper that you are using as a reference (if so, provide a
-citation)? Are there any other resources you need, but haven’t figured out how to obtain
-yet? Could you benefit from access to any special machines?
-GOALS AND DELIVERABLES: Describe the deliverables or goals of your project. This
-is by far the most important section of the proposal!
-• Separate your goals into what you PLAN TO ACHIEVE (what you believe you must
-get done to have a successful project and get the grade you expect) and an extra
-goal or two that you HOPE TO ACHIEVE if the project goes really well and you get
-ahead of schedule, as well as goals in case the work goes more slowly. It may not be
-possible to state precise performance goals at this time, but we encourage you be as
-precise as possible. If you do state a goal, give some justification of why you think
-you can achieve it. (e.g., I hope to speed up my starter code 10x, because if I did it
-would run in real-time.)
-• If applicable, describe the demo you plan to show at the poster session (Will it be an
-interactive demo? Will you show an output of the program that is really neat? Will
-you show speedup graphs?). Specifically, what will you show us that will demonstrate
-you did a good job?
-• If your project is an analysis project, what are you hoping to learn about the workload
-or system being studied? What question(s) do you plan to answer in your analysis?
-• Systems project proposals should describe what the system will be capable of and
-what performance is hoped to be achieved.
-3
-PLATFORM CHOICE: Describe why the platform (computer and/or language) you have
-chosen is a good one for your needs. Why does it make sense to use this parallel system
-for the workload you have chosen?
-SCHEDULE: Produce a schedule for your project. Your schedule should have at least
-one item to do per week. List what you plan to get done each week from now until
-the parallelism competition in order to meet your project goals. Keep in mind that due to
-other classes, you’ll have more time to work some weeks than others (work that into the
-schedule). You will need to re-evaluate your progress at the end of each week and update
-this schedule accordingly. Note the intermediate milestone deadline is April 19. In your
-schedule we encourage you to be precise as precise as possible. It’s often helpful to work
-backward in time from your deliverables and goals, writing down all the little things you’ll
-need to do (establish the dependencies).
-Submitting your proposal writeup: Please post your writeup on your project web page.
-(Note that you will also be posting updates and results to this web page, so your proposal
-should be a link on your web page, not the entire web page itself.) In addition, please
-submit your writeup to Gradescope (as a group submission). As noted earlier, that writeup
-should include a URL for your project web page. (Note: the Gradescope submission should
-be a PDF of the full proposal; not just a link to the proposal on your project web site.) -->
+**URL:** [https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/](https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/)
+
+---
+
+## Summary
+We aim to develop a concurrent extendible hash table optimized for high-performance parallel operations, focusing on the needs of hash tables in high-performance database systems. Our implementation will emphasize efficient resizing and use compare-and-swap (CAS) atomic operations to create a scalable, concurrent hash table. This approach eliminates the overhead typically associated with lock-based schemes while maintaining data consistency in multi-threaded environments. Additionally, we will investigate the performance benefits of SIMD in the context of parallel key lookups.
+
+---
+## Background
+Hash tables play a crucial role in database management systems (DBMS), particularly for joins and indexing. Traditional lock-based implementations often suffer from contention when multiple threads attempt to access the data structure simultaneously. Our lock-free design addresses these limitations by enabling parallel access without explicit synchronization mechanisms. We will also implement and compare performance with fine-grained and coarse-grained locking implementations.
+
+### Limitations of the Locking Approach:
+- Lock-based implementations create contention points.
+- Traditional resizing mechanisms block concurrent access.
+- Performance degradation under high parallel loads.
+
+### Industry Applications of Extendible Hashing:
+- Database indexing systems.
+- In-memory caching and in-memory databases.
+- High-frequency trading platforms.
+- Real-time analytics systems.
+
+---
+## Technical Challenges
+
+### Concurrency Management
+- Coordinating multiple thread operations without explicit locks.
+- Handling race conditions during resize operations, including managing memory allocation and deallocation in a multi-threaded environment.
+- Maintaining consistency during concurrent inserts and deletes.
+
+### Performance Optimization
+Our implementation must address several critical challenges:
+- Managing the overhead of CAS operations during high contention scenarios, due to the potential for a large number of continuous retries per thread.
+- Balancing the benefits of parallelism with the overhead required to maintain multiple threads, finding the optimal level of parallelization for maximum performance.
+- Ensuring efficient memory usage during dynamic resizing.
+
+---
+## Resources
+We will draw inspiration from the following research papers on lock-free extendible hash tables:
+- [Shalev and Shavit, "Split-ordered lists: Lock-free extensible hash tables," Journal of the ACM, 2006](https://ldhulipala.github.io/readings/split_ordered_lists.pdf).
+- [Fatourou, Kallimanis, and Ropars, "An Efficient Wait-free Resizable Hash Table," 2018](https://tropars.github.io/downloads/pdf/publications/spaa2018-FKR-WF_ext_hashing.pdf).
+
+---
+## Project Goals and Deliverables
+
+### Core Objectives
+The project aims to achieve the following key deliverables:
+- A fully functional lock-free extendible hash table implementation in C++/OpenMP, supporting concurrent insert and resize operations with atomic operations.
+- Efficient resize functionality (involving memory allocation and freeing) that performs well under contention.
+- Benchmarks and performance metrics to demonstrate scalability with the number of threads, focusing on metrics such as throughput and latency for each operation.
+- Comparison of our implementation with traditional fine-grained and coarse-grained lock-based implementations.
+- **Poster Session Demonstration**: Present scalability comparisons across implementations, workload benchmark results, and performance metrics under varied configurations.
+
+### Extended Objectives
+- Exploring the performance benefits of SIMD parallelization for concurrent key lookups and other hash table operations.
+
+### Evaluation Criteria
+- Performance comparison with traditional locking-based implementations, focusing on throughput and latency.
+- Scalability testing under varying loads and different thread counts.
+- Memory efficiency measurements.
+
+---
+## Platform Choice
+We chose OpenMP for CPU-based implementations, leveraging its simplicity and support for parallelism. For SIMD, we will use ISPC due to our familiarity with its usage. C++ is well-suited for the task due to its support for high-performance data structures and low-level memory management. Additionally, most widely-used open-source databases, such as PostgreSQL, are written in C/C++.
+
+---
+## Schedule
+- **11/7 - 11/13**: Research and finalize project proposal. Conduct a literature review on the current state of research.
+- **11/14 - 11/20**: Implement hash table with coarse-grained and fine-grained locks.
+- **11/21 - 11/27**: Begin implementation of the lock-free version and draft milestone report.
+- **11/28 - 12/4**: Complete the lock-free version, validate, and benchmark against locked versions. Start SIMD optimizations for lookups.
+- **12/5 - 12/13**: Consolidate results, fine-tune implementation, and prepare poster and final report.
+
+---
