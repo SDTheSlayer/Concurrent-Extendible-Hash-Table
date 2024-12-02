@@ -77,3 +77,75 @@ We chose OpenMP for CPU-based implementations, leveraging its simplicity and sup
 - **12/5 - 12/13**: Consolidate results, fine-tune implementation, and prepare poster and final report.
 
 ---
+
+
+# Milestone Report
+
+## Project Status Summary
+
+The implementation of the Concurrent Extendible Hash Table project is progressing according to schedule. We have completed the initial research phase and have implemented the coarse-grained locking version of the hash table (with testing for inserts, retrievals, and deletes). 
+
+We are currently working on two parallel implementations:
+- Fine-grained locking version of the concurrent hash table and corresponding test suite
+- A lock-free implementation of the extendible hash table based on a concurrent linked list
+
+## Completed Work
+
+- Comprehensive literature review of the lock-free extendible hash table
+- Implementation of baseline hash table with coarse-grained locking
+- Testing the coarse-grained locking implementation with inserts, retrievals and deletes
+- Initial attempt of fine-grained locking version, pending bug fixes
+
+## Pending Work
+
+- Complete implementing and testing the fine-grained implementation
+- Continue implementing the concurrent linked list and lock-free extendible hash table
+- Benchmark and compare the performance of each
+
+## Goals and Deliverables Status
+
+**On Track:**
+- Basic hash table implementation
+- Coarse-grained and fine-grained locking versions
+
+**In Progress:**
+- Lock-free implementation using CAS operations
+- Performance benchmarking framework
+
+**Stretch Goals:**
+- Efficient resize operations for the lock-free extendible hash table
+- SIMD optimization research
+
+## Updated Schedule
+
+**Week of December 2-8:**
+- Ashwin: Complete lock-free implementation
+- Shivang: Finish fine-grained locking and benchmarking framework
+
+**Week of December 9-13:**
+- Both: Performance optimization and benchmarking
+- Both: Poster and final report preparation
+
+## Poster Session Plans
+
+Our poster session will showcase comprehensive visual representations of our concurrent hash table's performance characteristics through:
+- Comparing throughput scaling across different thread counts for all three implementations
+- Latency distribution charts for all three implementations
+- Memory utilization graphs
+
+## Preliminary Results
+
+Initial results show correct behavior of coarse-grained locking implementation in both single-threaded and multi-threaded environments. The fine-grained locking implementation and benchmark suite are in progress.
+
+## Technical Concerns
+
+**Current Challenges:**
+- Memory errors in fine-grained locking
+- Sparse errors in multithreaded inserts into the coarse-grained locking implementation
+
+**Other Challenges:**
+- Ensuring correctness of CAS operations during resize operations
+- Optimizing SIMD implementation for key lookups
+- Memory management in concurrent scenarios
+
+No major blockers have been identified, and the project remains on track for successful completion by the deadline.
