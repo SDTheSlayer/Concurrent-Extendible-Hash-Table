@@ -5,9 +5,9 @@
 
 **URL:** [https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/](https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/)
 
-**Final Report:** [https://github.com/SDTheSlayer/Concurrent-Extendible-Hash-Table/blob/main/618%20Final%20Report.pdf](https://github.com/SDTheSlayer/Concurrent-Extendible-Hash-Table/blob/main/618%20Final%20Report.pdf)
+**Final Report:** [https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/618%20Final%20Report.pdf](https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/618%20Final%20Report.pdf)
 
-**Presentation:** [https://github.com/SDTheSlayer/Concurrent-Extendible-Hash-Table/blob/main/618%20Presentation.pdf](https://github.com/SDTheSlayer/Concurrent-Extendible-Hash-Table/blob/main/618%20Presentation.pdf)
+**Presentation:** [https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/618%20Presentation.pdf](https://sdtheslayer.github.io/Concurrent-Extendible-Hash-Table/618%20Presentation.pdf)
 
 ---
 
